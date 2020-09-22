@@ -4,32 +4,28 @@
     @include('frontend.layouts.header')
 </head>
 <body class="body">
+    @include('frontend.layouts.main_header')
+    <!-- home -->
+    @yield('header_content')
+    <!-- end home -->
 
-<!-- header -->
-@yield('header')
-<!-- end header -->
+    @yield('filter')
 
-<!-- home -->
-@yield('header_content')
-<!-- end home -->
+    <!-- content -->
+    @yield('content')
+    <!-- end content -->
 
-@yield('filter')
+    <!-- expected premiere -->
+    @yield('expected_premiere')
+    <!-- end expected premiere -->
 
-<!-- content -->
-@yield('content')
-<!-- end content -->
+    <!-- partners -->
+    @yield('partners')
+    <!-- end partners -->
 
-<!-- expected premiere -->
-@yield('expected_premiere')
-<!-- end expected premiere -->
-
-<!-- partners -->
-@yield('partners')
-<!-- end partners -->
-
-<!-- footer -->
-@include('frontend.layouts.main_footer')
-<!-- end footer -->
+    <!-- footer -->
+    @include('frontend.layouts.main_footer')
+    <!-- end footer -->
     @include('frontend.layouts.footer')
 </body>
 </html>

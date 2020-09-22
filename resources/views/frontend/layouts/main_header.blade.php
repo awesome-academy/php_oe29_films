@@ -5,7 +5,7 @@
                 <div class="col-12">
                     <div class="header__content">
                         <!-- header logo -->
-                        <a href="" class="header__logo">
+                        <a href="{{ route('frontend.home') }}" class="header__logo">
                             <img src="{{ asset('bower_components/bower_film/img/LOGO.png')}}" alt="">
                         </a>
                         <!-- end header logo -->
@@ -14,45 +14,41 @@
                         <ul class="header__nav">
                             <!-- dropdown -->
                             <li class="header__nav-item">
-                                <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuHome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
-
-                                <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuHome">
-                                    <li><a href="">Home slideshow bg</a></li>
-                                    <li><a href="">Home static bg</a></li>
-                                </ul>
+                                <a class="dropdown-toggle header__nav-link" href="{{ route('frontend.home') }}">{{ trans('home') }}</a>
                             </li>
                             <!-- end dropdown -->
-
                             <!-- dropdown -->
                             <li class="header__nav-item">
-                                <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
+                                <a class="dropdown-toggle header__nav-link" href="#" role="button"
+                                id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">{{ trans('type') }}</a>
 
                                 <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
-                                    <li><a href="">Catalog Grid</a></li>
-                                    <li><a href="">Catalog List</a></li>
-                                    <li><a href="">Details Movie</a></li>
-                                    <li><a href="">Details TV Series</a></li>
+                                    @foreach($main_menu['types_movie'] as $type)
+                                        <li><a href="{{ route('frontend.catalog', ['type', $type['slug']]) }}">{{ trans($type['title']) }}</a></li>
+                                    @endforeach
                                 </ul>
                             </li>
                             <!-- end dropdown -->
-
-                            <li class="header__nav-item">
-                                <a href="pricing.html" class="header__nav-link">Pricing Plan</a>
-                            </li>
-
-                            <li class="header__nav-item">
-                                <a href="faq.html" class="header__nav-link">Help</a>
-                            </li>
-
                             <!-- dropdown -->
-                            <li class="dropdown header__nav-item">
-                                <a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-more"></i></a>
+                            <li class="header__nav-item">
+                                <a class="dropdown-toggle header__nav-link" href="{{ route('frontend.catalog', ['genre', $main_menu['genre'][0]['order']]) }}">{{ trans($main_menu['genre'][0]['name']) }}</a>
 
-                                <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
-                                    <li><a href="">About</a></li>
-                                    <li><a href="">Sign In</a></li>
-                                    <li><a href="">Sign Up</a></li>
-                                    <li><a href="">404 Page</a></li>
+                            </li>
+                            <!-- end dropdown -->
+                            <!-- dropdown -->
+                            <li class="header__nav-item">
+                                <a class="dropdown-toggle header__nav-link" href="{{ route('frontend.catalog', ['genre', $main_menu['genre'][1]['order']]) }}" >{{ trans($main_menu['genre'][1]['name']) }}</a>
+                            </li>
+                            <!-- end dropdown -->
+                            <li class="header__nav-item">
+                                <a class="dropdown-toggle header__nav-link" href="#" role="button"
+                                id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">{{ trans('country') }}</a>
+                                <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
+                                    @foreach($main_menu['country'] as $country)
+                                        <li><a href="{{ route('frontend.catalog', ['country', $country['order']]) }}">{{ trans($country['name']) }}</a></li>
+                                    @endforeach
                                 </ul>
                             </li>
                             <!-- end dropdown -->
@@ -67,8 +63,17 @@
 
                             <a href="" class="header__sign-in">
                                 <i class="icon ion-ios-log-in"></i>
-                                <span>sign in</span>
+                                <span>{{ trans('sign_in') }}</span>
                             </a>
+                            <div class="dropdown header__lang">
+                                <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuLang"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Session::has('language') ? Session::get('language') : 'EN' }}</a>
+
+                                <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuLang">
+                                    <li><a href="{{ route('frontend.language',['en']) }}">{{ trans('EN') }}</a></li>
+                                    <li><a href="{{ route('frontend.language',['vi']) }}">{{ trans('VI') }}</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <!-- end header auth -->
 
@@ -86,14 +91,14 @@
     </div>
 
     <!-- header search -->
-    <form action="#" class="header__search">
+    <form action="{{ route('frontend.search') }}" class="header__search" method="get">
+        @csrf
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="header__search-content">
-                        <input type="text" placeholder="Search for a movie, TV Series that you are looking for">
-
-                        <button type="button">search</button>
+                            <input type="text" name="search" placeholder="{{ trans('search_key') }}">
+                            <button type="submit">{{ trans('search') }}</button>
                     </div>
                 </div>
             </div>

@@ -19,7 +19,7 @@ class Source extends Model
         'user_id',
     ];
 
-    public function moive()
+    public function movie()
     {
         return $this->belongsTo(Movie::class);
     }
