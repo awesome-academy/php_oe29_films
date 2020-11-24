@@ -56,10 +56,18 @@
                                 <i class="icon ion-ios-search"></i>
                             </button>
 
-                            <a href="" class="header__sign-in">
-                                <i class="icon ion-ios-log-in"></i>
-                                <span>{{ trans('sign_in') }}</span>
-                            </a>
+                            @if (auth()->check())
+                                <a href="{{ route('logout') }}" class="header__sign-in">
+                                    <i class="icon ion-ios-log-in"></i>
+                                    <span>{{ trans('sign_out') }}</span>
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}" class="header__sign-in">
+                                    <i class="icon ion-ios-log-in"></i>
+                                    <span>{{ trans('sign_in') }}</span>
+                                </a>
+                            @endif
+
                             <div class="dropdown header__lang">
                                 <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuLang" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Session::has('language') ? Session::get('language') : trans('EN') }}</a>
 

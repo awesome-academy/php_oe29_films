@@ -13,6 +13,20 @@
                 <li class="vk"><a href="#"><i class="icon ion-logo-vk"></i></a></li>
             </ul>
         </div>
+        @if (auth()->check())
+            <div class="col-6 col-sm-6">
+                <form action="{{ route('sendRequest') }}" method="POST" class="profile__form">
+                    @csrf
+                    <h1 class="footer__title">{{ trans('send_request') }} </h1>
+                    @error ('content')
+                        <span class="card__category"><a>{{ $message }}</a></span>
+                    @enderror
+                    <textarea id="text" class="form__textarea" placeholder="{{ trans('write') }}" name="content">{{ old('content') }}</textarea>
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    <button class="profile__btn" type="submit">{{ trans('send') }}</button>
+                </form>
+            </div>
+        @endif
         <div class="col-12">
             <div class="footer__copyright">
                 <small>{{ trans('created_by') . " " . config('config.user_created_by') }}</small>
