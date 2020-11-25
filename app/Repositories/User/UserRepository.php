@@ -4,6 +4,8 @@ namespace App\Repositories\User;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Jobs\SendForgetPasswordEmail;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -81,5 +83,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $user = User::whereMonth('created_at', $month)->get();
 
         return $user->count();
+    }
+
+    public function storeQueue($user, $password)
+    {
+        dispatch(new SendForgetPasswordEmail($user, $password));
     }
 }

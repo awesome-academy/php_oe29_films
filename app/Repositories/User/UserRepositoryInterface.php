@@ -12,4 +12,6 @@ interface UserRepositoryInterface
     public function findUserByEmail($request);
 
     public function getNewUserInMonth();
+
+    public function storeQueue($user, $password);
 }
